@@ -10,7 +10,9 @@ const {
   changeStatus,
   update,
   createReserve,
-  deleteReserver
+  deleteReserver,
+  listReserveById,
+  deleteReserve,
 } = require("../controllers/reserva.controller");
 
 /* Get categories list */
@@ -25,6 +27,11 @@ router.put("/cambioEstado/:id", changeStatus);
 // /* Create category */
 router.post("/", createReserve);
 // /* Delete category */
-router.delete('/delete/:id', deleteReserver)
+router.delete("/delete/:id", deleteReserver);
+
+/* A route that is used to get a single reservation by id. */
+router.get("/one/:id", listReserveById);
+
+router.delete("/", deleteReserve);
 
 module.exports = router;

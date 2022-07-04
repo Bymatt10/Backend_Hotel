@@ -7,7 +7,7 @@ const {
 } = require("../utils/dataValidator");
 
 // Errors
-const { NotFound, Conflict } = require("../utils/sequelizeError");
+const { NotFound } = require("../utils/sequelizeError");
 
 // async Handler
 const asyncHandler = require("../middlewares/asyncHandler");
@@ -111,7 +111,6 @@ exports.createReserve = asyncHandler(async (req, res) => {
 });
 
 exports.deleteReserver = asyncHandler(async (req, res) => {
-
   const reserve = await Reserva.findOne({
     where: { idreserva: req.params.id },
   });
@@ -121,5 +120,29 @@ exports.deleteReserver = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     reserve,
+  });
+});
+
+/* Getting a single reservation by id. */
+exports.listReserveById = asyncHandler(async (req, res) => {
+  const data = await Reserva.findOne({ where: { idreserva: req.params.id } });
+
+  res.status(200).json({
+    success: true,
+    reserve: data,
+  });
+});
+
+exports.deleteReserve = asyncHandler(async (req, res) => {
+  
+  await Reserva.destroy({
+    where: {
+      idreserva: req.body.idReserva,
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    msg: "Delete reserve",
   });
 });
